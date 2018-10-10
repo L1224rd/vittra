@@ -1,0 +1,11 @@
+body {
+  margin: 0;
+}
+
+div {
+  margin: 10px 10px 2px;
+}
+
+textarea, h1, h2, h3 {
+  margin-left: 10px;
+}
