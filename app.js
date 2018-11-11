@@ -4,14 +4,15 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const multer = require('multer');
+const cookieParser = require('cookie-parser');
+const bcrypt = require('bcrypt');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '/uploads/images'));
+    cb(null, path.join(__dirname, '/uploads'));
   },
   filename: (req, file, cb) => {
-    const fileNameArray = file.originalname.split('.');
-    cb(null, `img${Date.now()}.${fileNameArray[fileNameArray.length - 1]}`);
+    cb(null, 'file.zip');
   },
 });
 
@@ -19,9 +20,12 @@ const upload = multer({ storage });
 
 // ==================== INTERNAL IMPORTS ==================== //
 
+const loginProvider = require('./providers/login-provider');
+
 // ==================== GLOBAL VARIABLES ==================== //
 
 const app = express();
+let blogPost;
 
 // ==================== MIDDLEWARE ==================== //
 
@@ -32,14 +36,17 @@ app.use((req, res, next) => {
   next();
 });
 
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
+// parse post requests to body
+app.use(bodyParser.json({ limit: '50mb' }));
+// 50mb so it accepts base64 encoded images sent via POST
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
-// parse application/json
-app.use(bodyParser.json());
+// parse cookies
+app.use(cookieParser());
 
 // serving static files
 app.use('/views', express.static(path.join(__dirname, 'views')));
+
 
 // ==================== FUNCTIONS ==================== //
 
@@ -48,19 +55,44 @@ const getViewPath = view => path.join(__dirname, `views/${view}/${view}.html`);
 
 // ==================== ROUTES ==================== //
 
+app.use('/login', loginProvider);
+
+app.get('/get_post', (req, res) => {
+  res.send(JSON.stringify(blogPost));
+});
+
+app.post('/create_post', (req, res) => {
+  blogPost = req.body;
+  res.send('ok');
+});
+
+
 // ==================== RENDER VIEWS ==================== //
+
+app.get('/login', (req, res) => {
+  res.sendFile(getViewPath('login'));
+});
+
+app.use((req, res, next) => {
+  bcrypt.compare('mySecretToken', req.cookies.sessionToken, (error, result) => {
+    if (!result) {
+      res.redirect('/login');
+      return;
+    }
+    next();
+  });
+});
 
 app.get('/', (req, res) => {
   res.sendFile(getViewPath('home'));
 });
 
-app.post('/', (req, res) => {
-  console.log(req.body);
-  res.sendFile(getViewPath('home'));
+app.get('/blog', (req, res) => {
+  res.sendFile(getViewPath('blog'));
 });
 
-app.post('/uploads', upload.single('img'), (req, res) => {
-  res.send(req.file.filename);
+app.get('/blog_post', (req, res) => {
+  res.sendFile(getViewPath('blog_post'));
 });
 
 // ==================== START SERVER ==================== //
