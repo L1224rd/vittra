@@ -30,12 +30,22 @@ app.post('/', (req, res) => {
       return;
     }
     bcrypt.compare(req.body.password, user[0].password, (error, result) => {
+      if (error) {
+        res.send('intern-error');
+        return;
+      }
+
       if (!result) {
         res.send('wrong-password');
         return;
       }
 
       bcrypt.hash('mySecretToken', 10, (error, hash) => {
+        if (error) {
+          res.send('intern-error');
+          return;
+        }
+        
         res.send(hash);
       });
     });

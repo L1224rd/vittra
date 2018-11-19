@@ -74,6 +74,7 @@ app.get('/login', (req, res) => {
 });
 
 app.use((req, res, next) => {
+  // check if user is loggeda
   bcrypt.compare('mySecretToken', req.cookies.sessionToken, (error, result) => {
     if (!result) {
       res.redirect('/login');
