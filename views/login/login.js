@@ -6,7 +6,7 @@ $('document').ready(() => {
     }, (res) => {
       if (res === 'error') return;
       document.cookie = `sessionToken=${res}`;
-      window.location.replace('/');
+      window.location.replace('/admin');
     });
   });
 });

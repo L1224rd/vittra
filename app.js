@@ -73,27 +73,19 @@ app.get('/login', (req, res) => {
   res.sendFile(getViewPath('login'));
 });
 
-app.use((req, res, next) => {
-  // check if user is loggeda
+app.get('/', (req, res) => {
+  res.send('home');
+});
+
+app.get('/admin', (req, res) => {
+  // check if user is logged
   bcrypt.compare('mySecretToken', req.cookies.sessionToken, (error, result) => {
     if (!result) {
       res.redirect('/login');
       return;
     }
-    next();
+    res.sendFile(getViewPath('admin'));
   });
-});
-
-app.get('/', (req, res) => {
-  res.sendFile(getViewPath('home'));
-});
-
-app.get('/blog', (req, res) => {
-  res.sendFile(getViewPath('blog'));
-});
-
-app.get('/blog_post', (req, res) => {
-  res.sendFile(getViewPath('blog_post'));
 });
 
 // ==================== START SERVER ==================== //
