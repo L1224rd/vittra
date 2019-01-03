@@ -3,20 +3,8 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const multer = require('multer');
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcrypt');
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '/uploads'));
-  },
-  filename: (req, file, cb) => {
-    cb(null, 'file.zip');
-  },
-});
-
-const upload = multer({ storage });
 
 // ==================== INTERNAL IMPORTS ==================== //
 
@@ -46,6 +34,7 @@ app.use(cookieParser());
 
 // serving static files
 app.use('/views', express.static(path.join(__dirname, 'views')));
+app.use('/static', express.static(path.join(__dirname, 'static')));
 
 
 // ==================== FUNCTIONS ==================== //

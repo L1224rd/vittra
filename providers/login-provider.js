@@ -26,27 +26,42 @@ app.use(bodyParser.json());
 app.post('/', (req, res) => {
   User.find({ username: req.body.username }, (err, user) => {
     if (!user.length) {
-      res.send('user-not-found');
+      res.send({
+        status: 'error',
+        msg: 'user-not-found',
+      });
       return;
     }
     bcrypt.compare(req.body.password, user[0].password, (error, result) => {
       if (error) {
-        res.send('intern-error');
+        res.send({
+          status: 'error',
+          msg: 'intern-error',
+        });
         return;
       }
 
       if (!result) {
-        res.send('wrong-password');
+        res.send({
+          status: 'error',
+          msg: 'wrong-password',
+        });
         return;
       }
 
-      bcrypt.hash('mySecretToken', 10, (error, hash) => {
-        if (error) {
-          res.send('intern-error');
+      bcrypt.hash('mySecretToken', 10, (error2, hash) => {
+        if (error2) {
+          res.send({
+            status: 'error',
+            msg: 'intern-error',
+          });
           return;
         }
-        
-        res.send(hash);
+
+        res.send({
+          status: 'ok',
+          msg: hash,
+        });
       });
     });
   });
