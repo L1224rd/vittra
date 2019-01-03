@@ -9,8 +9,17 @@ $('document').ready(() => {
       content: quill.getContents(),
     });
 
-    $.post('/create_post', { data }, (res) => {
-      if (res === 'ok') window.location.replace('/blog_post');
+    $.post('/posts/create', {
+      data,
+      creationTime: new Date().getTime(),
+    }, (res) => {
+      if (res !== 'ok') {
+        alert('Error ao criar post. Detalhes no console.');
+        console.log(res);
+        return;
+      }
+      alert('Post criado com Sucessso!');
+      window.location.reload();
     });
   });
 });

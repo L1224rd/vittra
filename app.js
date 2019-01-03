@@ -9,11 +9,11 @@ const bcrypt = require('bcrypt');
 // ==================== INTERNAL IMPORTS ==================== //
 
 const loginProvider = require('./providers/login-provider');
+const postProvider = require('./providers/post-provider');
 
 // ==================== GLOBAL VARIABLES ==================== //
 
 const app = express();
-let blogPost;
 
 // ==================== MIDDLEWARE ==================== //
 
@@ -45,16 +45,7 @@ const getViewPath = view => path.join(__dirname, `views/${view}/${view}.html`);
 // ==================== ROUTES ==================== //
 
 app.use('/login', loginProvider);
-
-app.get('/get_post', (req, res) => {
-  res.send(JSON.stringify(blogPost));
-});
-
-app.post('/create_post', (req, res) => {
-  blogPost = req.body;
-  res.send('ok');
-});
-
+app.use('/posts', postProvider);
 
 // ==================== RENDER VIEWS ==================== //
 
