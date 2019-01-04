@@ -3,29 +3,18 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const multer = require('multer');
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcrypt');
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '/uploads'));
-  },
-  filename: (req, file, cb) => {
-    cb(null, 'file.zip');
-  },
-});
-
-const upload = multer({ storage });
 
 // ==================== INTERNAL IMPORTS ==================== //
 
 const loginProvider = require('./providers/login-provider');
+const postProvider = require('./providers/post-provider');
+const contentProvider = require('./providers/content-provider');
 
 // ==================== GLOBAL VARIABLES ==================== //
 
 const app = express();
-let blogPost;
 
 // ==================== MIDDLEWARE ==================== //
 
@@ -46,6 +35,7 @@ app.use(cookieParser());
 
 // serving static files
 app.use('/views', express.static(path.join(__dirname, 'views')));
+app.use('/static', express.static(path.join(__dirname, 'static')));
 
 
 // ==================== FUNCTIONS ==================== //
@@ -56,16 +46,8 @@ const getViewPath = view => path.join(__dirname, `views/${view}/${view}.html`);
 // ==================== ROUTES ==================== //
 
 app.use('/login', loginProvider);
-
-app.get('/get_post', (req, res) => {
-  res.send(JSON.stringify(blogPost));
-});
-
-app.post('/create_post', (req, res) => {
-  blogPost = req.body;
-  res.send('ok');
-});
-
+app.use('/posts', postProvider);
+app.use('/content', contentProvider);
 
 // ==================== RENDER VIEWS ==================== //
 

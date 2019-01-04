@@ -4,9 +4,14 @@ $('document').ready(() => {
       username: $('input[name=username]').val(),
       password: $('input[name=password]').val(),
     }, (res) => {
-      if (res === 'error') return;
-      document.cookie = `sessionToken=${res}`;
-      window.location.replace('/admin');
+      if (res.status === 'error') {
+        console.log(res.msg);
+        return;
+      }
+      if (res.status === 'ok') {
+        document.cookie = `sessionToken=${res.msg}`;
+        window.location.replace('/admin');
+      }
     });
   });
 });

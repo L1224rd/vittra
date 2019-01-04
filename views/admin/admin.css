@@ -5,6 +5,10 @@ body {
 	padding: 2px 40px 20px 60px;
 }
 
+#editor-container {
+  margin-top: 20px;
+}
+
 .box-content {
 	background: #fff;
 	padding: 30px 40px;
