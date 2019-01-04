@@ -22,4 +22,8 @@ $('document').ready(() => {
       window.location.reload();
     });
   });
+
+  $('update-home-button').click(() => {
+    
+  });
 });

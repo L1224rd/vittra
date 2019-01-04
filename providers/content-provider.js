@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 // ==================== INTERNAL IMPORTS ==================== //
 
 require('./database-provider');
-const Post = require('../models/post-model');
+const Home = require('../models/home-model');
 
 // ==================== GLOBAL VARIABLES ==================== //
 
@@ -22,24 +22,18 @@ app.use(bodyParser.json());
 
 // ==================== ROUTES ==================== //
 
-app.get('/', (req, res) => {
-  if (req.query.id) {
-    Post.findById(req.query.id, (err, data) => {
-      if (err) {
-        res.send(err);
-        return;
-      }
-      res.send(data);
-    });
-  } else {
-    Post.find({}, (err, data) => {
-      res.send(data);
-    });
-  }
+app.get('/home', (req, res) => {
+  Home.findOne({}, (err, data) => {
+    if (err) {
+      res.send(err);
+      return;
+    }
+    res.send(data);
+  });
 });
 
-app.post('/create', (req, res) => {
-  Post.create(req.body, (err) => {
+app.post('/home', (req, res) => {
+  Home.findOneAndUpdate({}, req.body, (err) => {
     if (err) {
       res.send(err);
       return;

@@ -10,6 +10,7 @@ const bcrypt = require('bcrypt');
 
 const loginProvider = require('./providers/login-provider');
 const postProvider = require('./providers/post-provider');
+const contentProvider = require('./providers/content-provider');
 
 // ==================== GLOBAL VARIABLES ==================== //
 
@@ -46,6 +47,7 @@ const getViewPath = view => path.join(__dirname, `views/${view}/${view}.html`);
 
 app.use('/login', loginProvider);
 app.use('/posts', postProvider);
+app.use('/content', contentProvider);
 
 // ==================== RENDER VIEWS ==================== //
 
