@@ -37,9 +37,16 @@ app.use(cookieParser());
 app.use('/views', express.static(path.join(__dirname, 'views')));
 app.use('/static', express.static(path.join(__dirname, 'static')));
 
+
+
+
+
 require('./models/home-model').find({}, (err, data) => {
   console.log(data);
 });
+
+
+
 
 // ==================== FUNCTIONS ==================== //
 
