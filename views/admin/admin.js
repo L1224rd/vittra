@@ -23,7 +23,10 @@ $('document').ready(() => {
     });
   });
 
-  $('update-home-button').click(() => {
-    
+  $('#update-home-button').click(() => {
+    console.log('yayyy');
+    $.post('/content/home', { banner: { description: 'yay2' } }, (res) => {
+      console.log(res);
+    });
   });
 });

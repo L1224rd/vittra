@@ -33,12 +33,22 @@ app.get('/home', (req, res) => {
 });
 
 app.post('/home', (req, res) => {
-  Home.findOneAndUpdate({}, req.body, (err) => {
+  Home.findOneAndUpdate({}, req.body, (err, doc) => {
     if (err) {
       res.send(err);
       return;
     }
-    res.send('ok');
+    if (!doc) {
+      Home.create(req.body, (err2) => {
+        if (err2) {
+          res.send(err2);
+          return;
+        }
+        res.send('ok');
+      });
+    } else {
+      res.send('ok');
+    }
   });
 });
 
