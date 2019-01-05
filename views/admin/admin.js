@@ -21,6 +21,33 @@ const updateAtuacaoCards = () => {
   });
 };
 
+const updatePartnerCards = () => {
+  $('#home-partners-cards').html('');
+  partnerCards.forEach((card) => {
+    $('#home-partners-cards').append(`
+      <div>
+        <b>Imagem</b>: ${card.image} 
+        <b>Link</b>: ${card.link} - <span onclick=window.deletePartnerCard('${card.link}')>🗑</span> 
+        - <span onclick=window.editPartnerCard('${JSON.stringify(card)}')>✎</span>
+      </div>
+    `);
+  });
+};
+
+const updateTestimonialCards = () => {
+  $('#home-testimonials-cards').html('');
+  testimonialCards.forEach((card) => {
+    $('#home-testimonials-cards').append(`
+      <div>
+        <b>Autor</b>: ${card.author} 
+        <b>Texto</b>: ${card.text} 
+        <b>Negócio</b>: ${card.business} - <span onclick=window.deleteTestimonialCard('${card.author}')>🗑</span> 
+        - <span onclick=window.editTestimonialCard('${JSON.stringify(card)}')>✎</span>
+      </div>
+    `);
+  });
+};
+
 
 $('document').ready(() => {
   $.get('/content/home', (data) => {
@@ -35,6 +62,8 @@ $('document').ready(() => {
     testimonialCards = data.testimonials.map(a => a);
     partnerCards = data.partners.map(a => a);
     updateAtuacaoCards();
+    updatePartnerCards();
+    updateTestimonialCards();
   });
 
   $('#post-button').click(() => {
@@ -66,6 +95,16 @@ $('document').ready(() => {
     updateAtuacaoCards();
   };
 
+  window.deletePartnerCard = (link) => {
+    partnerCards = partnerCards.filter(card => card.link !== link);
+    updatePartnerCards();
+  };
+
+  window.deleteTestimonialCard = (author) => {
+    testimonialCards = testimonialCards.filter(card => card.author !== author);
+    updateTestimonialCards();
+  };
+
   window.editAtuacaoCard = (data) => {
     const card = JSON.parse(data);
     window.deleteAtuacaoCard(card.title);
@@ -73,6 +112,21 @@ $('document').ready(() => {
     $('#home-atuacao-card-text').val(card.text);
     $('#home-atuacao-card-image').val(card.image);
     $('#home-atuacao-card-link').val(card.link);
+  };
+
+  window.editPartnerCard = (data) => {
+    const card = JSON.parse(data);
+    window.deletePartnerCard(card.link);
+    $('#home-partners-card-image').val(card.image);
+    $('#home-partners-card-link').val(card.link);
+  };
+
+  window.editTestimonialCard = (data) => {
+    const card = JSON.parse(data);
+    window.deleteTestimonialCard(card.author);
+    $('#home-testimonials-card-author').val(card.author);
+    $('#home-testimonials-card-text').val(card.text);
+    $('#home-testimonials-card-business').val(card.business);
   };
 
   $('#home-atuacao-card-button').click(() => {
@@ -93,11 +147,32 @@ $('document').ready(() => {
   });
 
   $('#home-partners-card-button').click(() => {
+    partnerCards.push({
+      image: $('#home-partners-card-image').val(),
+      link: $('#home-partners-card-link').val(),
+    });
+    console.log(partnerCards);
 
+    // clear inputs
+    $('#home-partners-card-image').val('');
+    $('#home-partners-card-link').val('');
+
+    updatePartnerCards();
   });
 
   $('#home-testimonials-card-button').click(() => {
+    testimonialCards.push({
+      author: $('#home-testimonials-card-author').val(),
+      text: $('#home-testimonials-card-text').val(),
+      business: $('#home-testimonials-card-business').val(),
+    });
 
+    // clear inputs
+    $('#home-testimonials-card-author').val('');
+    $('#home-testimonials-card-text').val('');
+    $('#home-testimonials-card-business').val('');
+
+    updateTestimonialCards();
   });
 
   $('#update-home-button').click(() => {
