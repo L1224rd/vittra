@@ -55,7 +55,10 @@ $('document').ready(() => {
       testmonials: [],
     }, (res) => {
       if (res === 'ok') window.location.reload();
-      else console.log(res);
+      else {
+        alert('Erro. Detalhes no console.');
+        console.log(res);
+      }
     });
   });
 });

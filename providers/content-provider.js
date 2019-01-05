@@ -7,9 +7,6 @@ const bodyParser = require('body-parser');
 
 require('./database-provider');
 
-const GlobalContent = {};
-GlobalContent.home = require('../models/home-model');
-
 // ==================== GLOBAL VARIABLES ==================== //
 
 const app = express();
@@ -22,10 +19,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
+// ==================== FUNCTIONS ==================== //
+
+// not a good practice, but this way we have way less code
+// use to get the models dinamycly
+const getSession = section => require(`../models/${section}-model`);
+
 // ==================== ROUTES ==================== //
 
-app.get('/:session', (req, res) => {
-  GlobalContent[req.params.session].findOne({}, (err, data) => {
+app.get('/:section', (req, res) => {
+  getSession(req.params.section).findOne({}, (err, data) => {
     if (err) {
       res.send(err);
       return;
@@ -34,14 +37,14 @@ app.get('/:session', (req, res) => {
   });
 });
 
-app.post('/:session', (req, res) => {
-  GlobalContent[req.params.session].findOneAndUpdate({}, req.body, (err, doc) => {
+app.post('/:section', (req, res) => {
+  getSession(req.params.section).findOneAndUpdate({}, req.body, (err, doc) => {
     if (err) {
       res.send(err);
       return;
     }
     if (!doc) {
-      GlobalContent[req.params.session].create(req.body, (err2) => {
+      getSession(req.params.section).create(req.body, (err2) => {
         if (err2) {
           res.send(err2);
           return;
@@ -53,8 +56,6 @@ app.post('/:session', (req, res) => {
     }
   });
 });
-
-// ==================== FUNCTIONS ==================== //
 
 // ================================================ //
 
