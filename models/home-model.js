@@ -14,7 +14,7 @@ const CardPartners = new Schema({
   link: { type: String, default: 'Not defined' },
 });
 
-const CardTestmonials = new Schema({
+const Cardtestimonials = new Schema({
   text: { type: String, default: 'Not defined' },
   author: { type: String, default: 'Not defined' },
   business: { type: String, default: 'Not defined' },
@@ -40,7 +40,7 @@ const Home = mongoose.model(
       },
     },
     partners: [CardPartners],
-    testmonials: [CardTestmonials],
+    testimonials: [Cardtestimonials],
   }),
 );
 
