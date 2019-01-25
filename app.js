@@ -65,7 +65,7 @@ app.get('/login', (req, res) => {
   res.sendFile(getViewPath('login'));
 });
 
-app.get('/', (req, res) => {
+app.get('/admin/admin', (req, res) => {
   res.send('home');
 });
 
