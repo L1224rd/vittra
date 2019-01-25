@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 // connect to database runing at the specified port
 mongoose.connect(
   'mongodb://localhost:27017/vittra',
-  { useNewUrlParser: true },
+  { useNewUrlParser: true }
 );
 
 // Get Mongoose to use the global promise library

@@ -6,7 +6,7 @@ const Post = mongoose.model(
   'Post',
   new Schema({
     data: { type: String, default: 'Not defined' },
-    creationTime: { type: Number, default: 0 },
+    creationTime: { type: Number, default: 0 }
   }),
 );
 

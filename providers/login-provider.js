@@ -28,7 +28,7 @@ app.post('/', (req, res) => {
     if (!user.length) {
       res.send({
         status: 'error',
-        msg: 'user-not-found',
+        msg: 'user-not-found'
       });
       return;
     }
@@ -36,7 +36,7 @@ app.post('/', (req, res) => {
       if (error) {
         res.send({
           status: 'error',
-          msg: 'intern-error',
+          msg: 'intern-error'
         });
         return;
       }
@@ -44,7 +44,7 @@ app.post('/', (req, res) => {
       if (!result) {
         res.send({
           status: 'error',
-          msg: 'wrong-password',
+          msg: 'wrong-password'
         });
         return;
       }
@@ -53,14 +53,14 @@ app.post('/', (req, res) => {
         if (error2) {
           res.send({
             status: 'error',
-            msg: 'intern-error',
+            msg: 'intern-error'
           });
           return;
         }
 
         res.send({
           status: 'ok',
-          msg: hash,
+          msg: hash
         });
       });
     });
