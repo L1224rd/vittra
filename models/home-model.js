@@ -41,7 +41,7 @@ const Home = mongoose.model(
     },
     partners: [CardPartners],
     testimonials: [Cardtestimonials]
-  }),
+  })
 );
 
 module.exports = Home;

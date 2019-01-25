@@ -7,7 +7,7 @@ const Post = mongoose.model(
   new Schema({
     data: { type: String, default: 'Not defined' },
     creationTime: { type: Number, default: 0 }
-  }),
+  })
 );
 
 module.exports = Post;
