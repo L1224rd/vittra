@@ -8,7 +8,7 @@ const User = mongoose.model(
     username: { type: String, default: 'Not defined' },
     email: { type: String, default: 'Not defined' },
     password: { type: String, default: 'Not defined' }
-  }),
+  })
 );
 
 module.exports = User;
