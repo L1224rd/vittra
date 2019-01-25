@@ -82,7 +82,7 @@ app.get('/admin', (req, res) => {
 
 // ==================== START SERVER ==================== //
 
-app.listen(process.env.PORT || 4000, () => {
+app.listen(process.env.PORT || 3030, () => {
   console.log('READY');
 });
 
