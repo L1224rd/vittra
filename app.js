@@ -35,8 +35,8 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(cookieParser());
 
 // serving static files
-app.use('/views', express.static(path.join(__dirname, 'views')));
-app.use('/static', express.static(path.join(__dirname, 'static')));
+app.use('/vt-admin/views', express.static(path.join(__dirname, 'views')));
+app.use('/vt-admin/static', express.static(path.join(__dirname, 'static')));
 
 // ==================== FUNCTIONS ==================== //
 
@@ -45,10 +45,10 @@ const getViewPath = view => path.join(__dirname, `views/${view}/${view}.html`);
 
 // ==================== ROUTES ==================== //
 
-app.use('/login', loginProvider);
-app.use('/posts', postProvider);
-app.use('/content', contentProvider);
-app.post('/contato', (req, res) => {
+app.use('/vt-admin/login', loginProvider);
+app.use('/vt-admin/posts', postProvider);
+app.use('/vt-admin/content', contentProvider);
+app.post('/vt-admin/contato', (req, res) => {
   sendEmail(req.body)
     .then((result) => {
       res.send(result);
@@ -61,15 +61,11 @@ app.post('/contato', (req, res) => {
 
 // ==================== RENDER VIEWS ==================== //
 
-app.get('/login', (req, res) => {
+app.get('/vt-admin/login', (req, res) => {
   res.sendFile(getViewPath('login'));
 });
 
-app.get('/admin/admin', (req, res) => {
-  res.send('home');
-});
-
-app.get('/admin', (req, res) => {
+app.get('/', (req, res) => {
   // check if user is logged
   bcrypt.compare('mySecretToken', req.cookies.sessionToken, (error, result) => {
     if (!result) {

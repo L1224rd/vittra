@@ -1,6 +1,6 @@
 $('document').ready(() => {
   $('#login-button').click(() => {
-    $.post('/login', {
+    $.post('/vt-admin/login', {
       username: $('input[name=username]').val(),
       password: $('input[name=password]').val(),
     }, (res) => {
@@ -10,7 +10,7 @@ $('document').ready(() => {
       }
       if (res.status === 'ok') {
         document.cookie = `sessionToken=${res.msg}`;
-        window.location.replace('/admin');
+        window.location.replace('/vt-admin');
       }
     });
   });
