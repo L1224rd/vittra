@@ -2,45 +2,47 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const CardAtuacao = new Schema({
-  title: { type: String, default: 'Not defined' },
-  text: { type: String, default: 'Not defined' },
-  image: { type: String, default: 'Not defined' },
-  link: { type: String, default: 'Not defined' }
+const Partner = new Schema({
+  imageUrl: { type: String, default: '' },
+  link: { type: String, default: '' }
 });
 
-const CardPartners = new Schema({
-  image: { type: String, default: 'Not defined' },
-  link: { type: String, default: 'Not defined' }
-});
-
-const Cardtestimonials = new Schema({
-  text: { type: String, default: 'Not defined' },
-  author: { type: String, default: 'Not defined' },
-  business: { type: String, default: 'Not defined' }
+const Card = new Schema({
+  title: { type: String, default: '' },
+  text: { type: String, default: '' },
+  imageUrl: { type: String, default: '' },
+  link: { type: String, default: '' },
+  class: { type: String, default: '' }
 });
 
 const Home = mongoose.model(
   'Home',
   new Schema({
     banner: {
-      title: { type: String, default: 'Not defined' },
-      description: { type: String, default: 'Not defined' }
+      title: { type: String, default: '' },
+      description: { type: String, default: '' }
     },
-    atuacao: {
-      title: { type: String, default: 'Not defined' },
-      description: { type: String, default: 'Not defined' },
-      cards: [CardAtuacao]
+    solutions: {
+      title: { type: String, default: '' },
+      description: { type: String, default: '' },
+      cards: [Card]
     },
-    call_to_action: {
-      title: { type: String, default: 'Not defined' },
+    callToAction: {
+      title: {
+        before: { type: String, default: '' },
+        after: { type: String, default: '' }
+      },
+      class: { type: String, default: '' },
       button: {
-        text: { type: String, default: 'Not defined' },
-        link: { type: String, default: 'Not defined' }
+        text: { type: String, default: '' },
+        link: { type: String, default: '' }
       }
     },
-    partners: [CardPartners],
-    testimonials: [Cardtestimonials]
+    partners: [Partner],
+    contact: {
+      title: { type: String, default: '' },
+      description: { type: String, default: '' }
+    }
   })
 );
 

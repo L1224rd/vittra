@@ -65,11 +65,11 @@ app.get('/vt-admin/login', (req, res) => {
   res.sendFile(getViewPath('login'));
 });
 
-app.get('/', (req, res) => {
+app.get('/vt-admin', (req, res) => {
   // check if user is logged
   bcrypt.compare('mySecretToken', req.cookies.sessionToken, (error, result) => {
     if (!result) {
-      res.redirect('/login');
+      res.redirect('/vt-admin/login');
       return;
     }
     res.sendFile(getViewPath('admin'));
