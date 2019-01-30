@@ -7,7 +7,7 @@ $('document').ready(() => {
   });
   quill.enable(false); // disable the editor so it is like a div and not a textarea
 
-  $.get('/get_post', (res) => {
+  $.get('/vt-admin/get_post', (res) => {
     const data = JSON.parse(JSON.parse(res).data);
 
     $('#post-title').text(data.title);

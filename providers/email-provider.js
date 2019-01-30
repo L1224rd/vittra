@@ -7,7 +7,7 @@ const transporter = nodemailer.createTransport({
   secure: true, // use SSL
   auth: {
     user: process.env.MY_EMAIL,
-    pass: process.env.MY_PASSWORD,
+    pass: process.env.MY_PASSWORD
   },
 });
 
@@ -23,7 +23,7 @@ const sendEmail = (info) => {
         <b>Email</b>: ${info.email},\n
         <b>Fone</b>: ${info.phone},\n
         <b>Mensagem</b>: ${info.message}
-      `,
+      `
     };
 
     transporter.sendMail(mailOptions, (error) => {

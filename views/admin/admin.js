@@ -50,7 +50,7 @@ const updateTestimonialCards = () => {
 
 
 $('document').ready(() => {
-  $.get('/content/home', (data) => {
+  $.get('/vt-admin/content/home', (data) => {
     $('#home-banner-title').val(data.banner.title);
     $('#home-banner-description').val(data.banner.description);
     $('#home-atuacao-title').val(data.atuacao.title);
@@ -76,7 +76,7 @@ $('document').ready(() => {
       content: quill.getContents(),
     });
 
-    $.post('/posts/create', {
+    $.post('/vt-admin/posts/create', {
       data,
       creationTime: new Date().getTime(),
     }, (res) => {
@@ -176,7 +176,7 @@ $('document').ready(() => {
   });
 
   $('#update-home-button').click(() => {
-    $.post('/content/home', {
+    $.post('/vt-admin/content/home', {
       banner: {
         title: $('#home-banner-title').val(),
         description: $('#home-banner-description').val(),
