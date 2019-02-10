@@ -204,3 +204,10 @@ $('document').ready(() => {
     });
   });
 });
+
+const hideOptions = (x) => {
+    document.getElementById('specificsolutions-solutionItems-imageArea-images-src').disabled = x;
+    document.getElementById('specificsolutions-solutionItems-imageArea-images-caption').disabled = x;
+    x = !x;
+    document.getElementById('specificsolutions-solutionItems-imageArea-src').disabled = x;
+}
